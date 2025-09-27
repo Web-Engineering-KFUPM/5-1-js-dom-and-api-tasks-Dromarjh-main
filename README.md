@@ -29,7 +29,7 @@ Read the following **sections** from the Zybooks.
 
 ---
 
-## 3) Concept Overview (Syntax-only)
+## 3) Concept Overview
 
 Below are the **core concepts used in this lab**, why they matter, and the **syntax** you’ll need.  
 
