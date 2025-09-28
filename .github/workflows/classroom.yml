@@ -1,25 +1,32 @@
 name: Classroom Autograding
 on:
   push:
-    branches:
-      - "**"
-  workflow_dispatch:
-
+    branches: [ main, master ]
 jobs:
-  autograding:
+  grade:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      checks: write
-      actions: read
+    timeout-minutes: 10  # whole job limit
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup Node
-        uses: actions/setup-node@v4
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: 20
+          cache: 'npm'
+      - run: npm ci
 
-      - name: Run Classroom Autograding
-        uses: education/autograding@v1
+      - name: Grade: TODOs (25)
+        run: npm run grade:todos
+
+      - name: Grade: Correctness (25)
+        run: npm run grade:correctness
+
+      - name: Grade: Quality (25)
+        run: npm run grade:quality
+
+      - name: Grade: Deadline
+        run: |
+          if node tools/deadline-check.js 2025-09-29T21:59:59Z; then
+            echo "ON TIME"
+          else
+            echo "LATE (half credit)"
+          fi
