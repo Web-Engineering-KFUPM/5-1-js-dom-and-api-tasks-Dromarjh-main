@@ -23,7 +23,7 @@
     },
     {
       "name": "Submission time — base credit (12.5)",
-      "setup": "echo awarding base credit for any submission",
+      "setup": "node -e \"process.exit(0)\"",
       "run": "node -e \"process.exit(0)\"",
       "timeout": 15000,
       "maxScore": 12.5

@@ -1,32 +1,36 @@
-name: Classroom Autograding
+name: Autograding (local preview)
+
 on:
   push:
-    branches: [ main, master ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
 jobs:
-  grade:
+  run-autograding:
     runs-on: ubuntu-latest
-    timeout-minutes: 10  # whole job limit
+    timeout-minutes: 15
+
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: 'npm'
-      - run: npm ci
+      - name: Checkout
+        uses: actions/checkout@v4
 
-      - name: Grade: TODOs (25)
-        run: npm run grade:todos
-
-      - name: Grade: Correctness (25)
-        run: npm run grade:correctness
-
-      - name: Grade: Quality (25)
-        run: npm run grade:quality
-
-      - name: Grade: Deadline
+      - name: Show autograding.json (debug)
         run: |
-          if node tools/deadline-check.js 2025-09-29T21:59:59Z; then
-            echo "ON TIME"
-          else
-            echo "LATE (half credit)"
-          fi
+          echo "Commit: $GITHUB_SHA"
+          echo "Listing .github/classroom:"
+          ls -la .github/classroom || true
+          echo "----- BEGIN autograding.json -----"
+          cat .github/classroom/autograding.json
+          echo "----- END autograding.json -----"
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Run Autograding
+        uses: education/autograding@v1
+        with:
+          path: .github/classroom/autograding.json
