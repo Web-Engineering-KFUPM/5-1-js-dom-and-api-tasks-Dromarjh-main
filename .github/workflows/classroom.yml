@@ -1,4 +1,4 @@
-name: Autograding (local preview)
+name: GitHub Classroom Autograding
 
 on:
   push:
@@ -8,7 +8,7 @@ permissions:
   contents: read
 
 jobs:
-  run-autograding:
+  autograding:
     runs-on: ubuntu-latest
     timeout-minutes: 15
 
@@ -19,10 +19,14 @@ jobs:
       - name: Show autograding.json (debug)
         run: |
           echo "Commit: $GITHUB_SHA"
-          echo "Listing .github/classroom:"
-          ls -la .github/classroom || true
-          echo "----- BEGIN autograding.json -----"
-          cat .github/classroom/autograding.json
+          echo "----- BEGIN .github/classroom/autograding.json -----"
+          if [ -f .github/classroom/autograding.json ]; then
+            cat .github/classroom/autograding.json
+          else
+            echo "autograding.json NOT FOUND at .github/classroom/autograding.json"
+            echo "Directory listing:"
+            ls -la .github/classroom || true
+          fi
           echo "----- END autograding.json -----"
 
       - name: Setup Node
@@ -33,4 +37,4 @@ jobs:
       - name: Run Autograding
         uses: education/autograding@v1
         with:
-          path: .github/classroom/autograding.json
+          token: ${{ secrets.GITHUB_TOKEN }}
