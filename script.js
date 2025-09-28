@@ -1,101 +1,96 @@
-document.addEventListener("DOMContentLoaded", function () {
-  /*
-  =======================================
-  TODO1: Welcome Board
-  ---------------------------------------
-  */
-  document.getElementById("t1-msg").innerHTML = "Hello, World!";
+/*
+=======================================
+📘 JavaScript & Web APIs Lab
+All tasks in one file (script.js)
+=======================================
+*/
 
-  /*
-  =======================================
-  TODO2: Interaction Corner
-  ---------------------------------------
-  */
-  const t2Btn = document.getElementById("t2-btn");
-  const t2Status = document.getElementById("t2-status");
+/*  
+=======================================
+TODO1: Welcome Board
+---------------------------------------
+When the page loads, display a welcome message 
+inside the <p> element with id="t1-msg".
 
-  t2Btn.addEventListener("click", function () {
-    t2Status.innerHTML = "You clicked the button!";
-  });
+✅ Task:
+- Select the element with id "t1-msg".
+- Change its text to "Hello, World!".
 
-  /*
-  =======================================
-  TODO3: Inspiring Quote Board
-  ---------------------------------------
-  */
-  // ---- Inspiring Quote Board (using dummyjson + local fallback) ----
-// ---- Inspiring Quote Board (dummyjson + local fallback) ----
-const quoteBtn  = document.getElementById("t3-loadQuote");
-const quoteText = document.getElementById("t3-quote");
-const quoteAuth = document.getElementById("t3-author");
+💡 Hint:
+document.getElementById("t1-msg").innerHTML = "Hello, World!";
+*/
+ 
 
-// Local fallback quotes (used if network/API blocked)
-const localQuotes = [
-  { quote: "Do what you can, with what you have, where you are.", author: "Theodore Roosevelt" },
-  { quote: "It always seems impossible until it’s done.", author: "Nelson Mandela" },
-  { quote: "The secret of getting ahead is getting started.", author: "Mark Twain" },
-  { quote: "Whether you think you can or you think you can’t, you’re right.", author: "Henry Ford" },
-  { quote: "Believe you can and you’re halfway there.", author: "Theodore Roosevelt" }
-];
+/*  
+=======================================
+TODO2: Interaction Corner
+---------------------------------------
+There is a button with id="t2-btn".
+When the button is clicked, change the text inside 
+the <p> with id="t2-status" to:
+    "You clicked the button!"
 
-function pickLocalQuote(label = "offline") {
-  const q = localQuotes[Math.floor(Math.random() * localQuotes.length)];
-  quoteText.textContent = `“${q.quote}”`;
-  quoteAuth.textContent = `— ${q.author}${label ? ` (${label})` : ""}`;
+✅ Task:
+- Get the button element.
+- Add a click event listener.
+- Inside the event, change the text of the status paragraph.
+
+💡 Hint:
+button.addEventListener("click", function () {
+    // change text here
+});
+*/
+ 
+
+/*  
+=======================================
+TODO3: Inspiring Quote Board
+---------------------------------------
+Use the Quotable API to display a random quote.
+
+🌍 API Link:
+https://dummyjson.com/quotes/random
+
+✅ Task:
+- When the button with id="t3-loadQuote" is clicked:
+    - Fetch a random quote from the API.
+    - Display the quote text inside the <p> with id="t3-quote".
+    - Display the author inside the <p> with id="t3-author".
+
+💡 Hint:
+The API returns JSON like:
+{
+  "content": "Do not watch the clock. Do what it does. Keep going.",
+  "author": "Sam Levenson"
 }
 
-async function loadQuote() {
-  // UI state
-  quoteBtn.disabled = true;
-  quoteText.textContent = "Loading...";
-  quoteAuth.textContent = "";
+Use:
+data.content   // the quote text
+data.author    // the author
+*/
+ 
 
-  try {
-    const res = await fetch("https://dummyjson.com/quotes/random", { cache: "no-store" });
-    if (!res.ok) throw new Error("HTTP " + res.status);
-    const data = await res.json(); // { id, quote, author }
-    quoteText.textContent = `“${data.quote}”`;
-    quoteAuth.textContent = `— ${data.author}`;
-  } catch (err) {
-    // Fallback if the API is blocked/offline
-    pickLocalQuote("fallback");
-  } finally {
-    quoteBtn.disabled = false;
-  }
-}
-
-if (quoteBtn && quoteText && quoteAuth) {
-  quoteBtn.addEventListener("click", loadQuote);
-  // Auto-load one quote so you see it working immediately
-  loadQuote();
-}
-
-
-  /*
+/*  
 =======================================
 TODO4: Dammam Weather Now
 ---------------------------------------
+Use the OpenWeatherMap API to display live weather data.
+
+🌍 API Link:
+https://api.openweathermap.org/data/2.5/weather?q=Dammam&appid=eb143142d18ea165c434cdb10b3d83e6&units=metric
+
+⚠️ Replace YOUR_API_KEY with your actual API key from:
+https://openweathermap.org/api
+
+✅ Task:
+- When the button with id="t4-loadWx" is clicked:
+    - Fetch current weather data for Dammam.
+    - Show temperature in the element with id="t4-temp".
+    - Show humidity in the element with id="t4-hum".
+    - Show wind speed in the element with id="t4-wind".
+
+💡 Hint:
+data.main.temp      → temperature (°C)
+data.main.humidity  → humidity (%)
+data.wind.speed     → wind speed (m/s)
 */
-const tempEl = document.getElementById("t4-temp");
-const humEl  = document.getElementById("t4-hum");
-const windEl = document.getElementById("t4-wind");
-const errEl  = document.getElementById("t4-err");
-const wxBtn  = document.getElementById("t4-loadWx");
-
-wxBtn.addEventListener("click", function () {
-  errEl.textContent = "";
-  const url = "https://api.openweathermap.org/data/2.5/weather?q=Dammam&appid=eb143142d18ea165c434cdb10b3d83e6&units=metric";
-
-  fetch(url)
-    .then(response => response.json())
-    .then(data => {
-      tempEl.textContent = data.main.temp + " °C";
-      humEl.textContent  = data.main.humidity + " %";
-      windEl.textContent = data.wind.speed + " m/s";
-    })
-    .catch(() => {
-      errEl.textContent = "Could not load weather data.";
-    });
-});
-
-});
