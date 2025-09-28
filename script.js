@@ -60,7 +60,7 @@ https://dummyjson.com/quotes/random
 💡 Hint:
 The API returns JSON like:
 {
-  "content": "Do not watch the clock. Do what it does. Keep going.",
+  "quote": "Do not watch the clock. Do what it does. Keep going.",
   "author": "Sam Levenson"
 }
 
