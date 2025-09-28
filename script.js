@@ -79,8 +79,8 @@ Use the OpenWeatherMap API to display live weather data.
 🌍 API Link:
 https://api.openweathermap.org/data/2.5/weather?q=Dammam&appid=API_KEY=metric
 
-⚠️ Replace YOUR_API_KEY with your actual API key from:
-https://openweathermap.org/api
+⚠️ Replace API_KEY with your actual API key from:
+Key: eb143142d18ea165c434cdb10b3d83e6&units
 
 ✅ Task:
 - When the button with id="t4-loadWx" is clicked:
