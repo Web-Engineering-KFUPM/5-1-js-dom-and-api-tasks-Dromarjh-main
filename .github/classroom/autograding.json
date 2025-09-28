@@ -22,16 +22,16 @@
       "maxScore": 25
     },
     {
-      "name": "Submission time — ON TIME (25)",
-      "setup": "echo checking deadline",
-      "run": "node tools/deadline-check.js 2025-09-29T21:59:59Z",
+      "name": "Submission time — base credit (12.5)",
+      "setup": "echo awarding base credit for any submission",
+      "run": "node -e \"process.exit(0)\"",
       "timeout": 15000,
-      "maxScore": 25
+      "maxScore": 12.5
     },
     {
-      "name": "Submission time — LATE half-credit (12.5)",
-      "setup": "echo half credit if late",
-      "run": "! node tools/deadline-check.js 2025-09-29T21:59:59Z",
+      "name": "Submission time — on-time bonus (12.5)",
+      "setup": "echo checking deadline bonus",
+      "run": "node tools/deadline-check.js 2025-09-29T21:59:59Z",
       "timeout": 15000,
       "maxScore": 12.5
     }
