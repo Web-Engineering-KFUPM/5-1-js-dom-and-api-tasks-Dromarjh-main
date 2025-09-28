@@ -4,36 +4,36 @@
       "name": "TODOs Completion (25)",
       "setup": "npm ci",
       "run": "npm run grade:todos",
-      "timeout": 600000,
-      "points": 25
+      "timeout": 60000,
+      "maxScore": 25
     },
     {
       "name": "Correctness of output (25)",
       "setup": "npm ci",
       "run": "npm run grade:correctness",
-      "timeout": 600000,
-      "points": 25
+      "timeout": 120000,
+      "maxScore": 25
     },
     {
       "name": "Code Quality (25)",
       "setup": "npm ci",
       "run": "npm run grade:quality",
-      "timeout": 600000,
-      "points": 25
+      "timeout": 60000,
+      "maxScore": 25
     },
     {
       "name": "Submission time — ON TIME (25)",
-      "setup": "npm ci",
-      "run": "node tools/deadline-check.js --deadline \"2025-09-29T23:59:59+02:00\" --mode ontime --grace 5",
-      "timeout": 120000,
-      "points": 25
+      "setup": "echo checking deadline",
+      "run": "node tools/deadline-check.js 2025-09-29T21:59:59Z",
+      "timeout": 15000,
+      "maxScore": 25
     },
     {
       "name": "Submission time — LATE half-credit (12.5)",
-      "setup": "npm ci",
-      "run": "node tools/deadline-check.js --deadline \"2025-09-29T23:59:59+02:00\" --mode late-half --grace 5",
-      "timeout": 120000,
-      "points": 12.5
+      "setup": "echo half credit if late",
+      "run": "! node tools/deadline-check.js 2025-09-29T21:59:59Z",
+      "timeout": 15000,
+      "maxScore": 12.5
     }
   ]
 }
